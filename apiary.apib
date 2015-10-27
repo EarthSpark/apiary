@@ -4,6 +4,8 @@ HOST: http://cloud.sparkmeter.io/api/v1/
 # Sparkmeter
 The Sparkmeter API is a service for interacting with the sparkcentral system.
 
+This api follows the jsonapi format published at http://jsonapi.org/
+
 # Group Authentication API
 Authentication related resources of the **Authentication API**
 
@@ -13,13 +15,104 @@ Authentication related resources of the **Authentication API**
 # Group Customer API
 Customer related resources of the **Customer API**
 
-## Get Customer Info {aka: Account Balance} [/customers/{id}]
+## Get Customers [/customers]
+
+### List customers [GET /customers]
++ Response 200 (application/vnd.api+json)
+
+        {
+            "links": {
+                "self": "http://cloud.sparkmeter.io/api/v1/customers",
+            },
+            "data": [
+                {
+                    "type": "customer",
+                    "id": "c00000000-0000-0000-0000-00000000001",
+                    "attributes": {
+                        "code": "72XYZ", 
+                        "name": "new customer1-local", 
+                        "credit_wallet": 1000,
+                        "debt_wallet": 100,
+                        "plan_wallet": 500
+                    }
+                },
+                {
+                    "type": "customer",
+                    "id": "c00000000-0000-0000-0000-00000000002",
+                    "attributes": {
+                        "code": "otherexternalid", 
+                        "name": "new customer2", 
+                        "credit_wallet": 1000,
+                        "debt_wallet": 100,
+                        "plan_wallet": 500
+                    }
+                }
+            ]
+        }
+        
+### List customers with pagination [GET /customers?page%5Bnumber%5D={page_number}&page%5Bsize%5D={page_size}]
++ Parameters
+    + page_number: `1` (optional, number)
+        Number `page[number]` of page to return.
+        + Default: `1`
+    + page_size: `1` (optional, number)
+        Number `page[size]` of customers to return per page.
+        + Default: `10`
+
++ Response 200 (application/vnd.api+json)
+
+        {
+            "links": {
+                "self": "http://cloud.sparkmeter.io/api/v1/customers?page[number]=1&page[size]=1",
+            },
+            "data": [
+                {
+                    "type": "customer",
+                    "id": "c00000000-0000-0000-0000-00000000001",
+                    "attributes": {
+                        "code": "72XYZ", 
+                        "name": "new customer1-local", 
+                        "credit_wallet": 1000,
+                        "debt_wallet": 100,
+                        "plan_wallet": 500
+                    }
+                }
+            ]
+        }
+
+### List Customers with filtering [GET /customers?filter%5Bcode%5D={filter_code}]
++ Parameters
+    + filter_code (optional, string, `72XYZ`) ... String `filter[code]` of Customers to return.
+
++ Response 200 (application/vnd.api+json)
+
+        {
+            "links": {
+                "self": "http://cloud.sparkmeter.io/api/v1/customers?filter[code]=72XYZ",
+            },
+            "data": [
+                {
+                    "type": "customer",
+                    "id": "c00000000-0000-0000-0000-00000000001",
+                    "attributes": {
+                        "code": "72XYZ", 
+                        "name": "new customer1-local", 
+                        "credit_wallet": 1000,
+                        "debt_wallet": 100,
+                        "plan_wallet": 500
+                    }
+                }
+            ]
+        }
+
+
+## Get Customer {aka: Account Balance} [/customers/{id}]
 Get the information for a given customer. 
 
 + Parameters
     + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Customer to perform action with.
 
-### Get Customer [GET]
+### GET
 + Response 200 (application/vnd.api+json)
 
         {
