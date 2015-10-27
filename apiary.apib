@@ -4,18 +4,22 @@ HOST: http://cloud.sparkmeter.io
 # Sparkmeter
 Sparkmeter API is a service for interacting with the sparkcentral system.
 
+# Group Authentication API
+Authentication related resources of the **Authentication API**
+
+**TODO**
 
 
 # Group Customer API
 Customer related resources of the **Customer API**
 
 ## Get Customer Info {aka: Account Balance} [/v1/customers/{id}]
-Get the information for a given account. 
+Get the information for a given customer. 
 
 + Parameters
     + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Customer to perform action with.
 
-### Get Info [GET]
+### Get Customer [GET]
 + Response 200 (application/vnd.api+json)
 
         {
@@ -58,14 +62,16 @@ Get the information for a given account.
         }
 
 ## Get Customer Transactions {aka: Last Transaction} [/v1/customers/{id}/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1]
-List transactions for a customer.
+List transactions for a customer. 
+This is able to give paginated results of all transactions involving this customer. 
+To get only the last transaction, set the page number and size values to 1.
 
 + Parameters
     + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Customer to perform action with.
     + page%5Bnumber%5D (optional, number, `1`) ... Number `page[number]` of page to return.
     + page%5Bsize%5D (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
 
-### Retrieve Transactions [GET]
+### Get Customer Transactions [GET]
 + Response 200 (application/vnd.api+json)
 
         {
@@ -200,7 +206,7 @@ Get transaction information
 + Parameters
     + id (required, uuid, `700000000-0000-0000-0000-00000000001`) ... UUID `id` of the Transaction to perform action with.
 
-### Get Transaction Info [GET]
+### Get Transaction [GET]
 + Response 200 (application/vnd.api+json)
 
         {
@@ -258,7 +264,7 @@ Get the information for a given meter.
 + Parameters
     + id (required, uuid, `100000000-0000-0000-0000-00000000001`) ... UUID `id` of the Meter to perform action with.
 
-### Get Info [GET]
+### Get Meter [GET]
 + Response 200 (application/vnd.api+json)
 
         {
@@ -322,3 +328,67 @@ Get the information for a given meter.
                 }
             }
         }
+
+
+# Group Sales Account API
+Sales Account related resources of the **Sales Account API**
+
+## Get Sales Account [/v1/sales_account/{id}]
+### Get Sales Account [GET]
++ Response 200 (application/vnd.api+json)
+
+        TODO
+
+## Get Sales Account Transactions {aka: Last Transaction} [/v1/sales_account/{id}/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1]
+List transactions created by this Sales Account. 
+This is able to give paginated results of all transactions to or from by this Sales Account. 
+To get only the last transaction, set the page number and size values to 1.
+
++ Parameters
+    + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Sales Account to perform action with.
+    + page%5Bnumber%5D (optional, number, `1`) ... Number `page[number]` of page to return.
+    + page%5Bsize%5D (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
+
+### Get Sales Account Transactions [GET]
++ Response 200 (application/vnd.api+json)
+
+        TODO
+
+# Group User API
+User related resources of the **User API**
+
+## Get User [/v1/users/{id}]
+### Get User [GET]
++ Response 200 (application/vnd.api+json)
+
+        TODO
+
+## Get User Transactions {aka: Last Transaction} [/v1/users/{id}/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1]
+List transactions created by this user. 
+This is able to give paginated results of all transactions created by this user. 
+To get only the last transaction, set the page number and size values to 1.
+
++ Parameters
+    + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the User to perform action with.
+    + page%5Bnumber%5D (optional, number, `1`) ... Number `page[number]` of page to return.
+    + page%5Bsize%5D (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
+
+### Get User Transactions [GET]
++ Response 200 (application/vnd.api+json)
+
+        TODO
+
+# Group Tariff API
+Tariff related resources of the **Tariff API**
+
+**TODO V2?**
+
+# Group Reading API
+Reading related resources of the **Reading API**
+
+**TODO V2?**
+
+# Group Microgrid API
+Microgrid related resources of the **Microgrid API**
+
+**TODO V2?**
