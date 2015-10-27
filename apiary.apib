@@ -15,47 +15,15 @@ Authentication related resources of the **Authentication API**
 # Group Customer API
 Customer related resources of the **Customer API**
 
-## Get Customers [/customers]
+## List Customers [/customers]
 
-### List customers [GET /customers]
-+ Response 200 (application/vnd.api+json)
-
-        {
-            "links": {
-                "self": "http://cloud.sparkmeter.io/api/v1/customers",
-            },
-            "data": [
-                {
-                    "type": "customer",
-                    "id": "c00000000-0000-0000-0000-00000000001",
-                    "attributes": {
-                        "code": "72XYZ", 
-                        "name": "new customer1-local", 
-                        "credit_wallet": 1000,
-                        "debt_wallet": 100,
-                        "plan_wallet": 500
-                    }
-                },
-                {
-                    "type": "customer",
-                    "id": "c00000000-0000-0000-0000-00000000002",
-                    "attributes": {
-                        "code": "otherexternalid", 
-                        "name": "new customer2", 
-                        "credit_wallet": 1000,
-                        "debt_wallet": 100,
-                        "plan_wallet": 500
-                    }
-                }
-            ]
-        }
-        
-### List customers with pagination [GET /customers?page%5Bnumber%5D={page_number}&page%5Bsize%5D={page_size}]
+### With Pagination [GET /customers{?page%5Bnumber%5D,page%5Bsize%5D}]
 + Parameters
-    + page_number: `1` (optional, number)
+    + page%5Bnumber%5D: `1` (optional, number)
         Number `page[number]` of page to return.
         + Default: `1`
-    + page_size: `1` (optional, number)
+        
+    + page%5Bsize%5D: `1` (optional, number)
         Number `page[size]` of customers to return per page.
         + Default: `10`
 
@@ -80,9 +48,10 @@ Customer related resources of the **Customer API**
             ]
         }
 
-### List Customers with filtering [GET /customers?filter%5Bcode%5D={filter_code}]
+### With Filtering [GET /customers{?filter%5Bcode%5D}]
 + Parameters
-    + filter_code (optional, string, `72XYZ`) ... String `filter[code]` of Customers to return.
+    + filter%5Bcode%5D: `72XYZ` (optional, string)
+        String `filter[code]` of Customers to return.
 
 + Response 200 (application/vnd.api+json)
 
@@ -106,13 +75,14 @@ Customer related resources of the **Customer API**
         }
 
 
-## Get Customer {aka: Account Balance} [/customers/{id}]
-Get the information for a given customer. 
+## Get Customer [/customers/{id}]
+Get the Account Balance and other information for a given customer. 
 
 + Parameters
-    + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Customer to perform action with.
+    + id: `c00000000-0000-0000-0000-00000000001` (required, UUID) 
+        UUID `id` of the Customer to perform action with.
 
-### GET
+### Get customer by id [GET]
 + Response 200 (application/vnd.api+json)
 
         {
@@ -154,16 +124,23 @@ Get the information for a given customer.
             }
         }
 
-## Get Customer Transactions {aka: Last Transaction} [/customers/{id}/transactions?page%5Bnumber%5D={page_number}&page%5Bsize%5D={page_size}]
-List transactions for a customer. 
+## Get Customer Transactions [/customers/{id}/transactions{?page%5Bnumber%5D,page%5Bsize%5D}]
+List transactions for a customer, optionally limiting to just the last transaction.
 This is able to give paginated results of all transactions involving this customer. 
 To get only the last transaction, set the page number and size values to 1.
 
 + Parameters
-    + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Customer to perform action with.
-    + page_number (optional, number, `1`) ... Number `page[number]` of page to return.
-    + page_size (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
+    + id: `c00000000-0000-0000-0000-00000000001` (required, UUID)
+        UUID `id` of the Customer to perform action with.
 
+    + page%5Bnumber%5D: `1` (optional, number)
+        Number `page[number]` of page to return.
+        + Default: `1`
+        
+    + page%5Bsize%5D: `1` (optional, number)
+        Number `page[size]` of transactions to return per page.
+        + Default: `10`
+        
 ### Get Customer Transactions [GET]
 + Response 200 (application/vnd.api+json)
 
@@ -218,8 +195,7 @@ To get only the last transaction, set the page number and size values to 1.
 # Group Transaction API
 Transaction related resources of the **Transaction API**
 
-## Transactions [/transactions]
-List transactions for a customer.
+## Create Transaction [/transactions]
 
 ### Create Transaction [POST]
 + Request (application/vnd.api+json)
@@ -293,13 +269,14 @@ List transactions for a customer.
             }
         }
         
-## Get Transaction {aka: Status of specific transaction} [/transactions/{id}]
-Get transaction information
-
+## Get Transaction [/transactions/{id}]
+Status of specific transaction
+ 
 + Parameters
-    + id (required, uuid, `700000000-0000-0000-0000-00000000001`) ... UUID `id` of the Transaction to perform action with.
+    + id: `700000000-0000-0000-0000-00000000001` (required, UUID)
+        UUID `id` of the Transaction to perform action with.
 
-### Get Transaction [GET]
+### Get Transaction by id  [GET]
 + Response 200 (application/vnd.api+json)
 
         {
@@ -351,13 +328,14 @@ Get transaction information
 # Group Meter API
 Meters related resources of the **Meter API**
 
-## Get Meter Info {aka: Get Meter Status} [/meters/{id}]
-Get the information for a given meter. 
+## Get Meter [/meters/{id}]
+Get the meter status and other information for a given meter. 
 
 + Parameters
-    + id (required, uuid, `100000000-0000-0000-0000-00000000001`) ... UUID `id` of the Meter to perform action with.
+    + id: `100000000-0000-0000-0000-00000000001` (required, UUID)
+        UUID `id` of the Meter to perform action with.
 
-### Get Meter [GET]
+### Get Meter by id  [GET]
 + Response 200 (application/vnd.api+json)
 
         {
@@ -427,21 +405,28 @@ Get the information for a given meter.
 Sales Account related resources of the **Sales Account API**
 
 ## Get Sales Account [/sales_account/{id}]
-### Get Sales Account [GET]
+### Get Sales Account by id [GET]
 + Response 200 (application/vnd.api+json)
 
         TODO
 
-## Get Sales Account Transactions {aka: Last Transaction} [/sales_account/{id}/transactions?page%5Bnumber%5D={page_number}&page%5Bsize%5D={page_size}]
-List transactions created by this Sales Account. 
+## Get Sales Account Transactions [/sales_account/{id}/transactions{?page%5Bnumber%5D,page%5Bsize%5D}]
+List transactions created by this Sales Account, optionally limiting to just the last transaction.
 This is able to give paginated results of all transactions to or from by this Sales Account. 
 To get only the last transaction, set the page number and size values to 1.
 
 + Parameters
-    + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Sales Account to perform action with.
-    + page_number (optional, number, `1`) ... Number `page[number]` of page to return.
-    + page_size (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
-    
+    + id: `c00000000-0000-0000-0000-00000000001` (required, UUID)
+        UUID `id` of the Sales Account to perform action with.
+
+    + page%5Bnumber%5D: `1` (optional, number)
+        Number `page[number]` of page to return.
+        + Default: `1`
+        
+    + page%5Bsize%5D: `1` (optional, number)
+        Number `page[size]` of transactions to return per page.
+        + Default: `10`
+        
 ### Get Sales Account Transactions [GET]
 + Response 200 (application/vnd.api+json)
 
@@ -459,16 +444,23 @@ User related resources of the **User API**
 
         TODO
 
-## Get User Transactions {aka: Last Transaction} [/users/{id}/transactions?page%5Bnumber%5D={page_number}&page%5Bsize%5D={page_size}]
-List transactions created by this user. 
+## Get User Transactions [/users/{id}/transactions{?page%5Bnumber%5D,page%5Bsize%5D}]
+List transactions created by this user, optionally limiting to just the last transaction.
 This is able to give paginated results of all transactions created by this user. 
 To get only the last transaction, set the page number and size values to 1.
 
 + Parameters
-    + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the User to perform action with.
-    + page_number (optional, number, `1`) ... Number `page[number]` of page to return.
-    + page_size (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
-    
+    + id: `c00000000-0000-0000-0000-00000000001` (required, UUID)
+        UUID `id` of the User to perform action with.
+
+    + page%5Bnumber%5D: `1` (optional, number)
+        Number `page[number]` of page to return.
+        + Default: `1`
+        
+    + page%5Bsize%5D: `1` (optional, number)
+        Number `page[size]` of transactions to return per page.
+        + Default: `10`
+        
 ### Get User Transactions [GET]
 + Response 200 (application/vnd.api+json)
 
