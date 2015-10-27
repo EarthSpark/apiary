@@ -1,0 +1,68 @@
+FORMAT: 1A
+HOST: http://www.google.com
+
+# Sparkmeter
+Notes API is a *short texts saving* service similar to its physical paper presence on your table.
+
+
+
+# Group Meters
+Meters related resources of the **Meters API**
+
+## Meters Collection [/meters]
+### List all Meters [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "title": "Jogging in park"
+        }, {
+          "id": 2, "title": "Pick-up posters from post-office"
+        }]
+
+### Create a Meter [POST]
++ Request (application/json)
+
+        { "title": "Buy cheese and bread for breakfast." }
+
++ Response 201 (application/json)
+
+        { "id": 3, "title": "Buy cheese and bread for breakfast." }
+
+## Meter [/meters/{id}]
+A single Meter object with all its details
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Meter to perform action with. Has example value.
+
+### Retrieve a Meter [GET]
++ Response 200 (application/hal+json)
+    + Headers
+
+            Link: <http://sparkmeter.apiary.io/meters/1>;rel="self",<http:/api.gistfox.com/readings>;rel="readings"
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/1" },
+                    "readings": { "href": "/meters/1/readings", "templated": true }
+                },
+                "id": 2, 
+                "title": "Pick-up posters from post-office"
+            }
+            
++ Response 200 (application/json)
+
+    + Header
+
+            X-My-Header: The Value
+
+    + Body
+
+            { "id": 2, "title": "Pick-up posters from post-office" }
+
+### Remove a Meter [DELETE]
++ Response 204
+
+
+
