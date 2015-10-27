@@ -1,8 +1,8 @@
 FORMAT: 1A
-HOST: http://cloud.sparkmeter.io
+HOST: http://cloud.sparkmeter.io/api/v1/
 
 # Sparkmeter
-Sparkmeter API is a service for interacting with the sparkcentral system.
+The Sparkmeter API is a service for interacting with the sparkcentral system.
 
 # Group Authentication API
 Authentication related resources of the **Authentication API**
@@ -13,7 +13,7 @@ Authentication related resources of the **Authentication API**
 # Group Customer API
 Customer related resources of the **Customer API**
 
-## Get Customer Info {aka: Account Balance} [/v1/customers/{id}]
+## Get Customer Info {aka: Account Balance} [/customers/{id}]
 Get the information for a given customer. 
 
 + Parameters
@@ -24,7 +24,7 @@ Get the information for a given customer.
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001",
+                "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001",
             },
             "data": {
                 "type": "customer",
@@ -39,8 +39,8 @@ Get the information for a given customer.
                 "relationships": {
                     "meters": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/meters",
-                            "related": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/meters"
+                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/meters",
+                            "related": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/meters"
                         },
                         "data": [
                             { "type": "meter", "id": "100000000-0000-0000-0000-00000000001" },
@@ -49,8 +49,8 @@ Get the information for a given customer.
                     },
                     "transactions": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/transactions",
-                            "related": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/transactions"
+                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/transactions",
+                            "related": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/transactions"
                         },
                         "data": [
                             { "type": "transaction", "id": "700000000-0000-0000-0000-00000000001" },
@@ -61,22 +61,22 @@ Get the information for a given customer.
             }
         }
 
-## Get Customer Transactions {aka: Last Transaction} [/v1/customers/{id}/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1]
+## Get Customer Transactions {aka: Last Transaction} [/customers/{id}/transactions?page%5Bnumber%5D={page_number}&page%5Bsize%5D={page_size}]
 List transactions for a customer. 
 This is able to give paginated results of all transactions involving this customer. 
 To get only the last transaction, set the page number and size values to 1.
 
 + Parameters
     + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Customer to perform action with.
-    + page%5Bnumber%5D (optional, number, `1`) ... Number `page[number]` of page to return.
-    + page%5Bsize%5D (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
+    + page_number (optional, number, `1`) ... Number `page[number]` of page to return.
+    + page_size (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
 
 ### Get Customer Transactions [GET]
 + Response 200 (application/vnd.api+json)
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1",
+                "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1",
             },
             "data": [{
                 "type": "transaction",
@@ -99,25 +99,25 @@ To get only the last transaction, set the page number and size values to 1.
                 "relationships": {
                     "from": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
+                            "self": "http://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
                         },
                         "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
                     },
                     "to": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001"
+                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
                     },
                     "reference_transaction": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/transactions/700000000-0000-0000-0000-00000000002",
+                            "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
                         },
                         "data": { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
                     }
                 },
                 "links": {
-                    "self": "http://cloud.sparkmeter.io/v1/transactions/700000000-0000-0000-0000-00000000001"
+                    "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001"
                 }]
             }
         }
@@ -125,7 +125,7 @@ To get only the last transaction, set the page number and size values to 1.
 # Group Transaction API
 Transaction related resources of the **Transaction API**
 
-## Transactions [/v1/transactions]
+## Transactions [/transactions]
 List transactions for a customer.
 
 ### Create Transaction [POST]
@@ -157,7 +157,7 @@ List transactions for a customer.
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/v1/transactions/700000000-0000-0000-0000-00000000001",
+                "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001",
             },
             "data": {
                 "type": "transaction",
@@ -180,19 +180,19 @@ List transactions for a customer.
                 "relationships": {
                     "from": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
+                            "self": "http://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
                         },
                         "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
                     },
                     "to": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001"
+                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
                     },
                     "reference_transaction": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/transactions/700000000-0000-0000-0000-00000000002",
+                            "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
                         },
                         "data": { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
                     }
@@ -200,7 +200,7 @@ List transactions for a customer.
             }
         }
         
-## Get Transaction {aka: Status of specific transaction} [/v1/transactions/{id}]
+## Get Transaction {aka: Status of specific transaction} [/transactions/{id}]
 Get transaction information
 
 + Parameters
@@ -211,7 +211,7 @@ Get transaction information
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/v1/transactions/700000000-0000-0000-0000-00000000001",
+                "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001",
             },
             "data": {
                 "type": "transaction",
@@ -234,19 +234,19 @@ Get transaction information
                 "relationships": {
                     "from": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
+                            "self": "http://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
                         },
                         "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
                     },
                     "to": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001"
+                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
                     },
                     "reference_transaction": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/transactions/700000000-0000-0000-0000-00000000002",
+                            "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
                         },
                         "data": { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
                     }
@@ -258,7 +258,7 @@ Get transaction information
 # Group Meter API
 Meters related resources of the **Meter API**
 
-## Get Meter Info {aka: Get Meter Status} [/v1/meters/{id}]
+## Get Meter Info {aka: Get Meter Status} [/meters/{id}]
 Get the information for a given meter. 
 
 + Parameters
@@ -269,7 +269,7 @@ Get the information for a given meter.
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/v1/meters/100000000-0000-0000-0000-00000000001",
+                "self": "http://cloud.sparkmeter.io/api/v1/meters/100000000-0000-0000-0000-00000000001",
             },
             "data": {
                 "type": "meter",
@@ -305,8 +305,8 @@ Get the information for a given meter.
                 "relationships": {
                     "readings": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/meters/100000000-0000-0000-0000-00000000001/relationships/readings",
-                            "related": "http://cloud.sparkmeter.io/v1/meters/100000000-0000-0000-0000-00000000001/readings"
+                            "self": "http://cloud.sparkmeter.io/api/v1/meters/100000000-0000-0000-0000-00000000001/relationships/readings",
+                            "related": "http://cloud.sparkmeter.io/api/v1/meters/100000000-0000-0000-0000-00000000001/readings"
                         },
                         "data": [
                             { "type": "reading", "id": "300000000-0000-0000-0000-00000000001" },
@@ -315,13 +315,13 @@ Get the information for a given meter.
                     },
                     "customer": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001"
+                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
                     },
                     "tariff": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/v1/tariffs/400000000-0000-0000-0000-00000000001"
+                            "self": "http://cloud.sparkmeter.io/api/v1/tariffs/400000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "tariff", "id": "400000000-0000-0000-0000-00000000001" }
                     }
@@ -333,22 +333,22 @@ Get the information for a given meter.
 # Group Sales Account API
 Sales Account related resources of the **Sales Account API**
 
-## Get Sales Account [/v1/sales_account/{id}]
+## Get Sales Account [/sales_account/{id}]
 ### Get Sales Account [GET]
 + Response 200 (application/vnd.api+json)
 
         TODO
 
-## Get Sales Account Transactions {aka: Last Transaction} [/v1/sales_account/{id}/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1]
+## Get Sales Account Transactions {aka: Last Transaction} [/sales_account/{id}/transactions?page%5Bnumber%5D={page_number}&page%5Bsize%5D={page_size}]
 List transactions created by this Sales Account. 
 This is able to give paginated results of all transactions to or from by this Sales Account. 
 To get only the last transaction, set the page number and size values to 1.
 
 + Parameters
     + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Sales Account to perform action with.
-    + page%5Bnumber%5D (optional, number, `1`) ... Number `page[number]` of page to return.
-    + page%5Bsize%5D (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
-
+    + page_number (optional, number, `1`) ... Number `page[number]` of page to return.
+    + page_size (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
+    
 ### Get Sales Account Transactions [GET]
 + Response 200 (application/vnd.api+json)
 
@@ -357,22 +357,22 @@ To get only the last transaction, set the page number and size values to 1.
 # Group User API
 User related resources of the **User API**
 
-## Get User [/v1/users/{id}]
+## Get User [/users/{id}]
 ### Get User [GET]
 + Response 200 (application/vnd.api+json)
 
         TODO
 
-## Get User Transactions {aka: Last Transaction} [/v1/users/{id}/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1]
+## Get User Transactions {aka: Last Transaction} [/users/{id}/transactions?page%5Bnumber%5D={page_number}&page%5Bsize%5D={page_size}]
 List transactions created by this user. 
 This is able to give paginated results of all transactions created by this user. 
 To get only the last transaction, set the page number and size values to 1.
 
 + Parameters
     + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the User to perform action with.
-    + page%5Bnumber%5D (optional, number, `1`) ... Number `page[number]` of page to return.
-    + page%5Bsize%5D (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
-
+    + page_number (optional, number, `1`) ... Number `page[number]` of page to return.
+    + page_size (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
+    
 ### Get User Transactions [GET]
 + Response 200 (application/vnd.api+json)
 
