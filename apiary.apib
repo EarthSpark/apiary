@@ -1,15 +1,210 @@
 FORMAT: 1A
-HOST: http://www.google.com
+HOST: http://cloud.sparkmeter.io
 
 # Sparkmeter
 Notes API is a *short texts saving* service similar to its physical paper presence on your table.
 
 
 
-# Group Meters
+# Group Customer API
 Meters related resources of the **Meters API**
 
-## Meters Collection [/meters]
+## Get Customer Info {aka: Account Balance} [/v1/customers/{id}]
+Get the information for a given account. 
+
++ Parameters
+    + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Customer to perform action with.
+
+### Get Info [GET]
++ Response 200 (application/vnd.api+json)
+
+        {
+            "links": {
+                "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001",
+            },
+            "data": {
+                "type": "customer",
+                "id": "c00000000-0000-0000-0000-00000000001",
+                "attributes": {
+                    "needs_sync": false, 
+                    "code": "72XYZ", 
+                    "name": "new customer1-local", 
+                    "last_sync": "2015-09-03T20:22:40.667446", 
+                    "last_update": "2015-09-03T20:10:55.855396",
+                    "credit_wallet": 1000,
+                    "debt_wallet": 100,
+                    "plan_wallet": 500
+                },
+                "relationships": {
+                    "meters": {
+                        "links": {
+                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/meters",
+                            "related": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/meters"
+                        },
+                        "data": [
+                            { "type": "meter", "id": "100000000-0000-0000-0000-00000000001" },
+                            { "type": "meter", "id": "100000000-0000-0000-0000-00000000002" }
+                        ]
+                    },
+                    "transactions": {
+                        "links": {
+                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/transactions",
+                            "related": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/transactions"
+                        },
+                        "data": [
+                            { "type": "transaction", "id": "700000000-0000-0000-0000-00000000001" },
+                            { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
+                        ]
+                    }
+                }
+            }
+        }
+
+## Get Customer Transactions {aka: Last Transaction} [/v1/customers/{id}/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1]
+List transactions for a customer.
+
++ Parameters
+    + id (required, uuid, `c00000000-0000-0000-0000-00000000001`) ... UUID `id` of the Customer to perform action with.
+    + page%5Bnumber%5D (optional, number, `1`) ... Number `page[number]` of page to return.
+    + page%5Bsize%5D (optional, number, `1`) ... Number `page[size]` of transactions to return per page.
+
+### Retrieve Transactions [GET]
++ Response 200 (application/vnd.api+json)
+
+        {
+            "links": {
+                "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001",
+            },
+            "data": [{
+                "type": "transaction",
+                "id": "700000000-0000-0000-0000-00000000001",
+                "attributes": {
+                    "memo": null, 
+                    "reference_id": "700000000-0000-0000-0000-00000000002", 
+                    "microgrid_id": "e1bd691d-a8b9-4301-944b-a840bf8b798a", 
+                    "last_update": "2015-09-03T20:10:55.851188", 
+                    "user_id": "730828b1-5287-4f3e-aeb0-fb0c9d0c8e25", 
+                    "to_wallet_id": "6d432138-f1d9-4d73-ac1e-fb10ee54c68e", 
+                    "created": "2015-08-11T14:48:34.890886", 
+                    "from_wallet_id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74", 
+                    "last_sync": "2015-09-03T20:22:40.667446", 
+                    "amount": 100.0, 
+                    "processed": true, 
+                    "error": null, 
+                    "source_id": "2927d857-1bf4-4233-bd5e-d900a84b0f39", 
+                    "acct_type": "credit", 
+                    "external_id": null, 
+                    "needs_sync": false
+                },
+                "relationships": {
+                    "from": {
+                        "links": {
+                            "self": "http://cloud.sparkmeter.io/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
+                        },
+                        "data": [
+                            { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" },
+                        ]
+                    },
+                    "to": {
+                        "links": {
+                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001"
+                        },
+                        "data": [
+                            { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" },
+                        ]
+                    },
+                    "reference_transaction": {
+                        "links": {
+                            "self": "http://cloud.sparkmeter.io/v1/transactions/700000000-0000-0000-0000-00000000002",
+                        },
+                        "data": [
+                            { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
+                        ]
+                    }
+                }
+            }
+        }
+
+# Group Meter API
+Meters related resources of the **Meters API**
+
+## Get Meter Info {aka: Get Meter Status} [/v1/meters/{id}]
+Get the information for a given meter. 
+
++ Parameters
+    + id (required, uuid, `100000000-0000-0000-0000-00000000001`) ... UUID `id` of the Meter to perform action with.
+
+### Get Info [GET]
++ Response 200 (application/vnd.api+json)
+
+        {
+            "links": {
+                "self": "http://cloud.sparkmeter.io/v1/meters/100000000-0000-0000-0000-00000000001",
+            },
+            "data": {
+                "type": "meter",
+                "id": "100000000-0000-0000-0000-00000000001",
+                "attributes": {
+                    "code": 666, 
+                    "customer_id": "550e5f67-4f45-4e29-a07c-4861b2e29395", 
+                    "microgrid_id": "e1bd691d-a8b9-4301-944b-a840bf8b798a", 
+                    "packet_request": 0, 
+                    "packet_response": 0, 
+                    "reading_id": null, 
+                    "bootloader": null, 
+                    "last_plan_payment_date": null, 
+                    "last_energy_datetime": "2015-07-30T15:24:29.857164", 
+                    "firmware": null, 
+                    "current_state": 0, 
+                    "is_running_plan": false, 
+                    "last_energy": 0.0, 
+                    "last_cycle_start": null, 
+                    "total_cycle_energy": 0.0, 
+                    "subnet": 1, 
+                    "tariff_id": "3acd9ad9-2ed9-4006-84b7-2d95526a1ba0", 
+                    "state": 0, 
+                    "needs_sync": false, 
+                    "hidden": true, 
+                    "city": "", 
+                    "street1": "", 
+                    "street2": "", 
+                    "state": "", 
+                    "coords": null, 
+                    "needs_sync": false, 
+                    "country": "", 
+                    "postalcode": "", 
+                },
+                "relationships": {
+                    "readings": {
+                        "links": {
+                            "self": "http://cloud.sparkmeter.io/v1/meters/100000000-0000-0000-0000-00000000001/relationships/readings",
+                            "related": "http://cloud.sparkmeter.io/v1/meters/100000000-0000-0000-0000-00000000001/readings"
+                        },
+                        "data": [
+                            { "type": "reading", "id": "100000000-0000-0000-0000-00000000001" },
+                            { "type": "reading", "id": "100000000-0000-0000-0000-00000000002" }
+                        ]
+                    },
+                    "transactions": {
+                        "links": {
+                            "self": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/transactions",
+                            "related": "http://cloud.sparkmeter.io/v1/customers/c00000000-0000-0000-0000-00000000001/transactions"
+                        },
+                        "data": [
+                            { "type": "transaction", "id": "700000000-0000-0000-0000-00000000001" },
+                            { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
+                        ]
+                    }
+                }
+            }
+        }
+
+
+
+# Group Payments API
+Meters related resources of the **Meters API**
+
+## Create Transaction [/transaction]
 ### List all Meters [GET]
 + Response 200 (application/json)
 
@@ -28,7 +223,7 @@ Meters related resources of the **Meters API**
 
         { "id": 3, "title": "Buy cheese and bread for breakfast." }
 
-## Meter [/meters/{id}]
+## Status of specific transaction [/transaction/{id}]
 A single Meter object with all its details
 
 + Parameters
@@ -64,5 +259,84 @@ A single Meter object with all its details
 ### Remove a Meter [DELETE]
 + Response 204
 
+
+
+# Group sample API
+Meters related resources of the **Meters API**
+
+## Get Account Balance [/metersx]
+### List all Meters [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "title": "Jogging in park"
+        }, {
+          "id": 2, "title": "Pick-up posters from post-office"
+        }]
+
+### Create a Meter [POST]
++ Request (application/json)
+
+        { "title": "Buy cheese and bread for breakfast." }
+
++ Response 201 (application/json)
+
+        { "id": 3, "title": "Buy cheese and bread for breakfast." }
+
+## Get Last Transaction [/metersx/{id}]
+A single Meter object with all its details
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Meter to perform action with. Has example value.
+
+### Retrieve a Meter [GET]
++ Response 200 (application/hal+json)
+    + Headers
+
+            Link: <http://sparkmeter.apiary.io/meters/1>;rel="self",<http:/api.gistfox.com/readings>;rel="readings"
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/1" },
+                    "readings": { "href": "/meters/1/readings", "templated": true }
+                },
+                "id": 2, 
+                "title": "Pick-up posters from post-office"
+            }
+            
++ Response 200 (application/json)
+
+    + Header
+
+            X-My-Header: The Value
+
+    + Body
+
+            { "id": 2, "title": "Pick-up posters from post-office" }
+
+### Remove a Meter [DELETE]
++ Response 204
+
+
+## Get Meter Status [/meter_statusx]
+### List all Meters [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "title": "Jogging in park"
+        }, {
+          "id": 2, "title": "Pick-up posters from post-office"
+        }]
+
+### Create a Meter [POST]
++ Request (application/json)
+
+        { "title": "Buy cheese and bread for breakfast." }
+
++ Response 201 (application/json)
+
+        { "id": 3, "title": "Buy cheese and bread for breakfast." }
 
 
