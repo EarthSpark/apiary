@@ -6,11 +6,11 @@ The Sparkmeter API is a service for interacting with the sparkcentral system.
 
 This api follows the jsonapi format published at http://jsonapi.org/
 
-# Group Authentication
-Authentication related resources of the **Authentication API**
+## Authentication
+All API requests are authenticated using the "Authentication-Token" header. In the code samples, replace 'your_auth_token' with the token you obtain from below.
 
-**TODO**
-
+### Obtaining a token:
+In the Sparkcentral UI, navigate to your users information page. Your API Token is listed under your User Information.
 
 # Group Customer
 Customer related resources of the **Customer API**
@@ -18,6 +18,7 @@ Customer related resources of the **Customer API**
 ## List Customers [/customers]
 
 ### With Pagination [GET /customers{?page%5Bnumber%5D,page%5Bsize%5D}]
+
 + Parameters
     + page%5Bnumber%5D: `1` (optional, number)
         Number `page[number]` of page to return.
@@ -26,7 +27,13 @@ Customer related resources of the **Customer API**
     + page%5Bsize%5D: `1` (optional, number)
         Number `page[size]` of customers to return per page.
         + Default: `10`
-  
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
 + Response 200 (application/vnd.api+json)
 
         {
@@ -52,6 +59,12 @@ Customer related resources of the **Customer API**
 + Parameters
     + filter%5Bcode%5D: `72XYZ` (optional, string)
         String `filter[code]` of Customers to return.
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
 
 + Response 200 (application/vnd.api+json)
 
@@ -83,6 +96,13 @@ Get the Account Balance and other information for a given customer.
         UUID `id` of the Customer to perform action with.
 
 ### Get customer by id [GET]
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
 + Response 200 (application/vnd.api+json)
 
         {
@@ -142,6 +162,13 @@ To get only the last transaction, set the page number and size values to 1.
         + Default: `10`
         
 ### Get Customer Transactions [GET]
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
 + Response 200 (application/vnd.api+json)
 
         {
@@ -199,28 +226,34 @@ Transaction related resources of the **Transaction API**
 
 ### Create Transaction [POST]
 + Request (application/vnd.api+json)
+    
+    + Headers
+    
+            Authentication-Token: your_auth_token
 
-        {
-            "data": {
-                "type": "transaction",
-                "attributes": {
-                    "memo": null, 
-                    "microgrid_id": "e1bd691d-a8b9-4301-944b-a840bf8b798a", 
-                    "amount": 100.0, 
-                    "source_id": "2927d857-1bf4-4233-bd5e-d900a84b0f39", 
-                    "acct_type": "credit", 
-                    "external_id": null, 
-                },
-                "relationships": {
-                    "from": {
-                        "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
+    + Body
+    
+            {
+                "data": {
+                    "type": "transaction",
+                    "attributes": {
+                        "memo": null, 
+                        "microgrid_id": "e1bd691d-a8b9-4301-944b-a840bf8b798a", 
+                        "amount": 100.0, 
+                        "source_id": "2927d857-1bf4-4233-bd5e-d900a84b0f39", 
+                        "acct_type": "credit", 
+                        "external_id": null, 
                     },
-                    "to": {
-                        "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
+                    "relationships": {
+                        "from": {
+                            "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
+                        },
+                        "to": {
+                            "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
+                        }
                     }
                 }
             }
-        }
 
 + Response 201 (application/vnd.api+json)
 
@@ -277,6 +310,13 @@ Status of specific transaction
         UUID `id` of the Transaction to perform action with.
 
 ### Get Transaction by id  [GET]
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
 + Response 200 (application/vnd.api+json)
 
         {
@@ -336,6 +376,13 @@ Get the meter status and other information for a given meter.
         UUID `id` of the Meter to perform action with.
 
 ### Get Meter by id  [GET]
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
 + Response 200 (application/vnd.api+json)
 
         {
@@ -406,6 +453,13 @@ Sales Account related resources of the **Sales Account API**
 
 ## Get Sales Account [/sales_account/{id}]
 ### Get Sales Account by id [GET]
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
 + Response 200 (application/vnd.api+json)
 
         TODO
@@ -428,6 +482,13 @@ To get only the last transaction, set the page number and size values to 1.
         + Default: `10`
         
 ### Get Sales Account Transactions [GET]
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
 + Response 200 (application/vnd.api+json)
 
         TODO
@@ -440,6 +501,13 @@ User related resources of the **User API**
 
 ## Get User [/users/{id}]
 ### Get User by id [GET]
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
 + Response 200 (application/vnd.api+json)
 
         TODO
@@ -462,6 +530,13 @@ To get only the last transaction, set the page number and size values to 1.
         + Default: `10`
         
 ### Get User Transactions [GET]
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
 + Response 200 (application/vnd.api+json)
 
         TODO
