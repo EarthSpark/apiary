@@ -1,10 +1,12 @@
 FORMAT: 1A
-HOST: http://cloud.sparkmeter.io/api/v1/
+HOST: https://cloud.sparkmeter.io/api/v1/
 
 # Sparkmeter
 The Sparkmeter API is a service for interacting with the sparkcentral system.
 
-This api follows the jsonapi format published at http://jsonapi.org/
+This api follows the jsonapi format published at https://jsonapi.org/
+
+**TODO: add since date field on transaction queries**
 
 ## Authentication
 All API requests are authenticated using the "Authentication-Token" header. In the code samples, replace 'your_auth_token' with the token you obtain from below.
@@ -38,7 +40,9 @@ Customer related resources of the **Customer API**
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/api/v1/customers?page[number]=1&page[size]=1",
+                "self": "https://cloud.sparkmeter.io/api/v1/customers?page[number]=1&page[size]=1",
+                "next": "https://cloud.sparkmeter.io/api/v1/customers?page[number]=2&page[size]=1",
+                "last": "https://cloud.sparkmeter.io/api/v1/customers?page[number]=10&page[size]=1"
             },
             "data": [
                 {
@@ -49,7 +53,14 @@ Customer related resources of the **Customer API**
                         "name": "new customer1-local", 
                         "credit_wallet": 1000,
                         "debt_wallet": 100,
-                        "plan_wallet": 500
+                        "plan_wallet": 500,
+                        "address_city": "", 
+                        "address_street1": "", 
+                        "address_street2": "", 
+                        "address_state": "", 
+                        "address_coords": null, 
+                        "address_country": "", 
+                        "address_postalcode": "", 
                     }
                 }
             ]
@@ -70,7 +81,7 @@ Customer related resources of the **Customer API**
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/api/v1/customers?filter[code]=72XYZ",
+                "self": "https://cloud.sparkmeter.io/api/v1/customers?filter[code]=72XYZ",
             },
             "data": [
                 {
@@ -107,7 +118,7 @@ Get the Account Balance and other information for a given customer.
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001",
+                "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001",
             },
             "data": {
                 "type": "customer",
@@ -122,8 +133,8 @@ Get the Account Balance and other information for a given customer.
                 "relationships": {
                     "meters": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/meters",
-                            "related": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/meters"
+                            "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/meters",
+                            "related": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/meters"
                         },
                         "data": [
                             { "type": "meter", "id": "100000000-0000-0000-0000-00000000001" },
@@ -132,8 +143,8 @@ Get the Account Balance and other information for a given customer.
                     },
                     "transactions": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/transactions",
-                            "related": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/transactions"
+                            "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/relationships/transactions",
+                            "related": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/transactions"
                         },
                         "data": [
                             { "type": "transaction", "id": "700000000-0000-0000-0000-00000000001" },
@@ -173,7 +184,7 @@ To get only the last transaction, set the page number and size values to 1.
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1",
+                "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1",
             },
             "data": [{
                 "type": "transaction",
@@ -196,25 +207,25 @@ To get only the last transaction, set the page number and size values to 1.
                 "relationships": {
                     "from": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
+                            "self": "https://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
                         },
                         "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
                     },
                     "to": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
+                            "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
                     },
                     "reference_transaction": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
+                            "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
                         },
                         "data": { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
                     }
                 },
                 "links": {
-                    "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001"
+                    "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001"
                 }]
             }
         }
@@ -259,7 +270,7 @@ Transaction related resources of the **Transaction API**
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001",
+                "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001",
             },
             "data": {
                 "type": "transaction",
@@ -282,19 +293,19 @@ Transaction related resources of the **Transaction API**
                 "relationships": {
                     "from": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
+                            "self": "https://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
                         },
                         "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
                     },
                     "to": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
+                            "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
                     },
                     "reference_transaction": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
+                            "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
                         },
                         "data": { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
                     }
@@ -321,7 +332,7 @@ Status of specific transaction
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001",
+                "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001",
             },
             "data": {
                 "type": "transaction",
@@ -344,19 +355,19 @@ Status of specific transaction
                 "relationships": {
                     "from": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
+                            "self": "https://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
                         },
                         "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
                     },
                     "to": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
+                            "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
                     },
                     "reference_transaction": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
+                            "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
                         },
                         "data": { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
                     }
@@ -387,7 +398,7 @@ Get the meter status and other information for a given meter.
 
         {
             "links": {
-                "self": "http://cloud.sparkmeter.io/api/v1/meters/100000000-0000-0000-0000-00000000001",
+                "self": "https://cloud.sparkmeter.io/api/v1/meters/100000000-0000-0000-0000-00000000001",
             },
             "data": {
                 "type": "meter",
@@ -398,11 +409,11 @@ Get the meter status and other information for a given meter.
                     "microgrid_id": "e1bd691d-a8b9-4301-944b-a840bf8b798a", 
                     "packet_request": 0, 
                     "packet_response": 0, 
-                    "reading_id": null, 
-                    "bootloader": null, 
+                    "reading_id": "300000000-0000-0000-0000-00000000001", 
+                    "bootloader": "v1.0", 
                     "last_plan_payment_date": null, 
                     "last_energy_datetime": "2015-07-30T15:24:29.857164", 
-                    "firmware": null, 
+                    "firmware": "v1.0", 
                     "current_state": 0, 
                     "is_running_plan": false, 
                     "last_energy": 0.0, 
@@ -412,19 +423,19 @@ Get the meter status and other information for a given meter.
                     "tariff_id": "3acd9ad9-2ed9-4006-84b7-2d95526a1ba0", 
                     "state": 0, 
                     "hidden": true, 
-                    "city": "", 
-                    "street1": "", 
-                    "street2": "", 
-                    "state": "", 
-                    "coords": null, 
-                    "country": "", 
-                    "postalcode": "", 
+                    "address_city": "", 
+                    "address_street1": "", 
+                    "address_street2": "", 
+                    "address_state": "", 
+                    "address_coords": null, 
+                    "address_country": "", 
+                    "address_postalcode": "", 
                 },
                 "relationships": {
                     "readings": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/meters/100000000-0000-0000-0000-00000000001/relationships/readings",
-                            "related": "http://cloud.sparkmeter.io/api/v1/meters/100000000-0000-0000-0000-00000000001/readings"
+                            "self": "https://cloud.sparkmeter.io/api/v1/meters/100000000-0000-0000-0000-00000000001/relationships/readings",
+                            "related": "https://cloud.sparkmeter.io/api/v1/meters/100000000-0000-0000-0000-00000000001/readings"
                         },
                         "data": [
                             { "type": "reading", "id": "300000000-0000-0000-0000-00000000001" },
@@ -433,13 +444,13 @@ Get the meter status and other information for a given meter.
                     },
                     "customer": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
+                            "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
                     },
                     "tariff": {
                         "links": {
-                            "self": "http://cloud.sparkmeter.io/api/v1/tariffs/400000000-0000-0000-0000-00000000001"
+                            "self": "https://cloud.sparkmeter.io/api/v1/tariffs/400000000-0000-0000-0000-00000000001"
                         },
                         "data": { "type": "tariff", "id": "400000000-0000-0000-0000-00000000001" }
                     }
@@ -451,7 +462,49 @@ Get the meter status and other information for a given meter.
 # Group Sales Account
 Sales Account related resources of the **Sales Account API**
 
-## Get Sales Account [/sales_account/{id}]
+
+## List Sales Account [/sales_accounts]
+
+### With Pagination [GET /sales_accounts{?page%5Bnumber%5D,page%5Bsize%5D}]
++ Parameters
+    + page%5Bnumber%5D: `1` (optional, number)
+        Number `page[number]` of page to return.
+        + Default: `1`
+        
+    + page%5Bsize%5D: `1` (optional, number)
+        Number `page[size]` of Sales Accounts to return per page.
+        + Default: `10`
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
++ Response 200 (application/vnd.api+json)
+
+        {
+            "links": {
+                "self": "https://cloud.sparkmeter.io/api/v1/sales_accounts?page[number]=1&page[size]=1",
+                "next": "https://cloud.sparkmeter.io/api/v1/sales_accounts?page[number]=2&page[size]=1",
+                "last": "https://cloud.sparkmeter.io/api/v1/sales_accounts?page[number]=10&page[size]=1"
+            },
+            "data": [
+                {
+                    "type": "sales_account",
+                    "id": "c00000000-0000-0000-0000-00000000001",
+                    "attributes": {
+                        "name": "Jean Noel - Les Anglais", 
+                        "credit_wallet": 1000,
+                        "debt_wallet": 100
+                    }
+                }
+            ]
+        }
+
+
+
+## Get Sales Account [/sales_accounts/{id}]
 ### Get Sales Account by id [GET]
 
 + Request
@@ -462,9 +515,22 @@ Sales Account related resources of the **Sales Account API**
 
 + Response 200 (application/vnd.api+json)
 
-        TODO
+        {
+            "links": {
+                "self": "https://cloud.sparkmeter.io/api/v1/sales_accounts/x00000000-0000-0000-0000-00000000001",
+            },
+            "data": {
+                "type": "sales_account",
+                "id": "x00000000-0000-0000-0000-00000000001",
+                "attributes": {
+                    "name": "Jean Noel - Les Anglais", 
+                    "credit_wallet": 1000,
+                    "debt_wallet": 100
+                }
+            }
+        }
 
-## Get Sales Account Transactions [/sales_account/{id}/transactions{?page%5Bnumber%5D,page%5Bsize%5D}]
+## Get Sales Account Transactions [/sales_accounts/{id}/transactions{?page%5Bnumber%5D,page%5Bsize%5D}]
 List transactions created by this Sales Account, optionally limiting to just the last transaction.
 This is able to give paginated results of all transactions to or from by this Sales Account. 
 To get only the last transaction, set the page number and size values to 1.
@@ -491,16 +557,62 @@ To get only the last transaction, set the page number and size values to 1.
 
 + Response 200 (application/vnd.api+json)
 
-        TODO
+        {
+            "links": {
+                "self": "https://cloud.sparkmeter.io/api/v1/sales_accounts/x00000000-0000-0000-0000-00000000001/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1",
+            },
+            "data": [{
+                "type": "transaction",
+                "id": "700000000-0000-0000-0000-00000000001",
+                "attributes": {
+                    "memo": null, 
+                    "reference_id": "700000000-0000-0000-0000-00000000002", 
+                    "microgrid_id": "e1bd691d-a8b9-4301-944b-a840bf8b798a", 
+                    "user_id": "730828b1-5287-4f3e-aeb0-fb0c9d0c8e25", 
+                    "to_wallet_id": "6d432138-f1d9-4d73-ac1e-fb10ee54c68e", 
+                    "created": "2015-08-11T14:48:34.890886", 
+                    "from_wallet_id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74", 
+                    "amount": 100.0, 
+                    "processed": true, 
+                    "error": null, 
+                    "source_id": "2927d857-1bf4-4233-bd5e-d900a84b0f39", 
+                    "acct_type": "credit", 
+                    "external_id": null
+                },
+                "relationships": {
+                    "from": {
+                        "links": {
+                            "self": "https://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
+                        },
+                        "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
+                    },
+                    "to": {
+                        "links": {
+                            "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
+                        },
+                        "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
+                    },
+                    "reference_transaction": {
+                        "links": {
+                            "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
+                        },
+                        "data": { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
+                    }
+                },
+                "links": {
+                    "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001"
+                }]
+            }
+        }
 
 # Group User
 User related resources of the **User API**
 
-**Maybe V2?**
-
-
 ## Get User [/users/{id}]
 ### Get User by id [GET]
++ Parameters
+    + id: `900000000-0000-0000-0000-00000000001` (required, UUID)
+        UUID `id` of the User to perform action with.
 
 + Request
 
@@ -510,7 +622,82 @@ User related resources of the **User API**
 
 + Response 200 (application/vnd.api+json)
 
-        TODO
+        {
+            "links": {
+                "self": "https://cloud.sparkmeter.io/api/v1/users/900000000-0000-0000-0000-00000000001"
+            },
+            "data": {
+                "type": "user",
+                "id": "900000000-0000-0000-0000-00000000001",
+                "attributes": {
+                    "name": "Jean Noel", 
+                    "credit_wallet": 1000,
+                    "debt_wallet": 100
+                }
+            },
+            "relationships": {
+                "sales_accounts": {
+                    "links": {
+                        "self": "https://cloud.sparkmeter.io/api/v1/users/900000000-0000-0000-0000-00000000001/relationships/sales_accounts",
+                        "related": "https://cloud.sparkmeter.io/api/v1/users/900000000-0000-0000-0000-00000000001/sales_accounts"
+                    },
+                    "data": [
+                        { "type": "sales_account", "id": "x00000000-0000-0000-0000-00000000001" },
+                        { "type": "sales_account", "id": "x00000000-0000-0000-0000-00000000002" }
+                    ]
+                }
+            }
+        }
+
+
+
+## List User Sales Accounts [/users/{id}/sales_accounts]
+### List User Sales Accounts [GET]
++ Parameters
+    + id: `900000000-0000-0000-0000-00000000001` (required, UUID)
+        UUID `id` of the User to perform action with.
+
++ Request
+
+    + Headers
+    
+            Authentication-Token: your_auth_token
+
++ Response 200 (application/vnd.api+json)
+
+        {
+            "links": {
+                "self": "https://cloud.sparkmeter.io/api/v1/users/900000000-0000-0000-0000-00000000001/sales_accounts"
+            },
+            "data": [
+                {
+                    "type": "sales_account",
+                    "id": "x00000000-0000-0000-0000-00000000001",
+                    "attributes": {
+                        "name": "Jean Noel - Les Anglais", 
+                        "credit_wallet": 1000,
+                        "debt_wallet": 100
+                    },
+                    "links": {
+                        "self": "https://cloud.sparkmeter.io/api/v1/sales_accounts/x00000000-0000-0000-0000-00000000001"
+                    }
+                },
+                {
+                    "type": "sales_account",
+                    "id": "x00000000-0000-0000-0000-00000000002",
+                    "attributes": {
+                        "name": "Jean Noel - OtherGrid", 
+                        "credit_wallet": 1000,
+                        "debt_wallet": 100
+                    },
+                    "links": {
+                        "self": "https://cloud.sparkmeter.io/api/v1/sales_accounts/x00000000-0000-0000-0000-00000000002"
+                    }
+                }
+            ]
+        }
+
+
 
 ## Get User Transactions [/users/{id}/transactions{?page%5Bnumber%5D,page%5Bsize%5D}]
 List transactions created by this user, optionally limiting to just the last transaction.
@@ -539,7 +726,53 @@ To get only the last transaction, set the page number and size values to 1.
 
 + Response 200 (application/vnd.api+json)
 
-        TODO
+        {
+            "links": {
+                "self": "https://cloud.sparkmeter.io/api/v1/users/c00000000-0000-0000-0000-00000000001/transactions?page%5Bnumber%5D=1&page%5Bsize%5D=1",
+            },
+            "data": [{
+                "type": "transaction",
+                "id": "700000000-0000-0000-0000-00000000001",
+                "attributes": {
+                    "memo": null, 
+                    "reference_id": "700000000-0000-0000-0000-00000000002", 
+                    "microgrid_id": "e1bd691d-a8b9-4301-944b-a840bf8b798a", 
+                    "user_id": "730828b1-5287-4f3e-aeb0-fb0c9d0c8e25", 
+                    "to_wallet_id": "6d432138-f1d9-4d73-ac1e-fb10ee54c68e", 
+                    "created": "2015-08-11T14:48:34.890886", 
+                    "from_wallet_id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74", 
+                    "amount": 100.0, 
+                    "processed": true, 
+                    "error": null, 
+                    "source_id": "2927d857-1bf4-4233-bd5e-d900a84b0f39", 
+                    "acct_type": "credit", 
+                    "external_id": null
+                },
+                "relationships": {
+                    "from": {
+                        "links": {
+                            "self": "https://cloud.sparkmeter.io/api/v1/vendor/d19d9de4-5676-4c56-82ca-3c1bafbb1c74"
+                        },
+                        "data": { "type": "vendor", "id": "d19d9de4-5676-4c56-82ca-3c1bafbb1c74" }
+                    },
+                    "to": {
+                        "links": {
+                            "self": "https://cloud.sparkmeter.io/api/v1/customers/c00000000-0000-0000-0000-00000000001"
+                        },
+                        "data": { "type": "customer", "id": "c00000000-0000-0000-0000-00000000001" }
+                    },
+                    "reference_transaction": {
+                        "links": {
+                            "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000002",
+                        },
+                        "data": { "type": "transaction", "id": "700000000-0000-0000-0000-00000000002" }
+                    }
+                },
+                "links": {
+                    "self": "https://cloud.sparkmeter.io/api/v1/transactions/700000000-0000-0000-0000-00000000001"
+                }]
+            }
+        }
 
 # Group Tariff
 Tariff related resources of the **Tariff API**
